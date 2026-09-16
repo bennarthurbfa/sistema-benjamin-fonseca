@@ -16,6 +16,34 @@
 }
 
 /* ============================= */
+/* DESTAQUE — TJPB               */
+/* ============================= */
+
+.tribunal.tjpb-featured {
+    order: -999;
+    border-color: rgba(212,175,55,.85);
+    box-shadow: 0 0 0 1px rgba(212,175,55,.18), 0 10px 30px rgba(0,0,0,.18);
+    position: relative;
+}
+
+.tribunal.tjpb-featured::before {
+    content: 'PRINCIPAL';
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 9px;
+    letter-spacing: .14em;
+    font-weight: 700;
+    color: #d4af37;
+    opacity: .95;
+}
+
+.tribunal.tjpb-featured .sigla {
+    color: #d4af37;
+    font-weight: 800;
+}
+
+/* ============================= */
 /* MODAL — AGENDAMENTOS          */
 /* ============================= */
 
@@ -621,8 +649,14 @@
 <script>
 
 const KEY='bfa_github_auth';
-const USER='Benjamin';
-const PASS='Benjamin8945';
+
+const USERS = {
+    Alexandre: 'Alexandremagno123!',
+    Daniel: 'Danielfonseca123!',
+    Benjamin: 'Benjaminamaral123!',
+    Maryana: 'Maryana123!',
+    Adriana: 'Adrianabianchi0483'
+};
 
 const login=document.getElementById('login');
 const portal=document.getElementById('portal');
@@ -658,9 +692,12 @@ form.addEventListener('submit',e=>{
 
     e.preventDefault();
 
+    const username = document.getElementById('user').value.trim();
+    const password = document.getElementById('pass').value;
+
     if(
-        document.getElementById('user').value.trim()===USER &&
-        document.getElementById('pass').value===PASS
+        Object.prototype.hasOwnProperty.call(USERS, username) &&
+        USERS[username] === password
     ){
 
         sessionStorage.setItem(KEY,'1');
@@ -838,13 +875,22 @@ function initTribunals(){
             );
 
 
+        // TJPB fica sempre no topo da lista.
+        const orderedList = [...list].sort((a, b) => {
+            const aTJPB = a.sigla === 'TJPB';
+            const bTJPB = b.sigla === 'TJPB';
+            return Number(bTJPB) - Number(aTJPB);
+        });
+
         grid.innerHTML=
 
-            list.map(
+            orderedList.map(
 
                 x=>
 
-                    '<a class="tribunal" href="'+
+                    '<a class="tribunal '+
+                    (x.sigla === 'TJPB' ? 'tjpb-featured' : '')+
+                    '" href="'+
                     x.url+
                     '" target="_blank" rel="noopener">'+
 
@@ -931,4 +977,3 @@ document.addEventListener('keydown', e => {
 
 </body>
 </html>
-
