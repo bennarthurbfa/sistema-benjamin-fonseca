@@ -8,6 +8,13 @@
 <link rel="stylesheet" href="styles.css">
 
 <style>
+/* O card de Agendamentos usa o mesmo comportamento visual dos demais cards. */
+.management-grid .management-card {
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+}
+
 /* ============================= */
 /* MODAL — AGENDAMENTOS          */
 /* ============================= */
@@ -233,9 +240,9 @@
 
 
         <!-- GOOGLE AGENDA / AGENDAMENTOS -->
-        <button
-            type="button"
+        <a
             class="management-card"
+            href="#agendamentos"
             id="openAgenda">
 
             <img
@@ -248,7 +255,7 @@
                 <p>Google Agenda do escritório</p>
             </div>
 
-        </button>
+        </a>
 
 
 
@@ -896,7 +903,10 @@ function hideAgendaModal(){
 }
 
 if(openAgenda){
-    openAgenda.addEventListener('click', showAgendaModal);
+    openAgenda.addEventListener('click', e => {
+        e.preventDefault();
+        showAgendaModal();
+    });
 }
 
 if(closeAgenda){
