@@ -6,6 +6,139 @@
 <title>Portal BFA</title>
 <link rel="icon" href="assets/favicon.png">
 <link rel="stylesheet" href="styles.css">
+
+<style>
+/* ============================= */
+/* MODAL — AGENDAMENTOS          */
+/* ============================= */
+
+.agenda-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,.78);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.agenda-modal.active {
+    display: flex;
+}
+
+.agenda-modal-box {
+    width: min(1100px, 96vw);
+    height: min(760px, 92vh);
+    background: #111;
+    border: 1px solid rgba(212,175,55,.35);
+    border-radius: 18px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.55);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.agenda-modal-header {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.agenda-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.agenda-modal-title .agenda-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: rgba(66,133,244,.12);
+    color: #4285f4;
+    font-size: 22px;
+}
+
+.agenda-modal-title h3 {
+    margin: 0;
+    font-size: 19px;
+}
+
+.agenda-modal-title p {
+    margin: 3px 0 0;
+    opacity: .65;
+    font-size: 12px;
+}
+
+.agenda-close {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: .75;
+    padding: 4px 8px;
+}
+
+.agenda-close:hover {
+    opacity: 1;
+}
+
+.agenda-modal-content {
+    flex: 1;
+    min-height: 0;
+    background: #fff;
+}
+
+.agenda-modal-content iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.agenda-modal-footer {
+    padding: 10px 16px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(255,255,255,.08);
+    background: #111;
+}
+
+.agenda-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    color: #111;
+    background: #d4af37;
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+@media (max-width: 700px) {
+    .agenda-modal {
+        padding: 10px;
+    }
+
+    .agenda-modal-box {
+        width: 100%;
+        height: 94vh;
+        border-radius: 12px;
+    }
+}
+</style>
+
 </head>
 
 <body>
@@ -97,6 +230,26 @@
 
 
     <div class="management-grid">
+
+
+        <!-- GOOGLE AGENDA / AGENDAMENTOS -->
+        <button
+            type="button"
+            class="management-card"
+            id="openAgenda">
+
+            <img
+                class="system-logo"
+                src="https://cdn.simpleicons.org/googlecalendar"
+                alt="Google Agenda">
+
+            <div>
+                <h3>Agendamentos</h3>
+                <p>Google Agenda do escritório</p>
+            </div>
+
+        </button>
+
 
 
 
@@ -720,6 +873,49 @@ function initTribunals(){
     render();
 
 }
+
+
+// =============================
+// MODAL — AGENDAMENTOS
+// =============================
+
+const agendaModal = document.getElementById('agendaModal');
+const openAgenda = document.getElementById('openAgenda');
+const closeAgenda = document.getElementById('closeAgenda');
+
+function showAgendaModal(){
+    agendaModal.classList.add('active');
+    agendaModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function hideAgendaModal(){
+    agendaModal.classList.remove('active');
+    agendaModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+if(openAgenda){
+    openAgenda.addEventListener('click', showAgendaModal);
+}
+
+if(closeAgenda){
+    closeAgenda.addEventListener('click', hideAgendaModal);
+}
+
+if(agendaModal){
+    agendaModal.addEventListener('click', e => {
+        if(e.target === agendaModal){
+            hideAgendaModal();
+        }
+    });
+}
+
+document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && agendaModal.classList.contains('active')){
+        hideAgendaModal();
+    }
+});
 
 </script>
 
