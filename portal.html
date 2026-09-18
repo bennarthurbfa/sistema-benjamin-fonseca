@@ -267,23 +267,24 @@
     <div class="management-grid">
 
 
-        <!-- GOOGLE AGENDA / AGENDAMENTOS -->
-        <a
-            class="management-card"
-            href="https://workspace.google.com/intl/pt-BR/products/calendar/"
-            id="openAgenda">
+ <!-- GOOGLE AGENDA / AGENDAMENTOS -->
+<a
+    class="management-card"
+    href="https://calendar.google.com/"
+    target="_blank"
+    rel="noopener">
 
-            <img
-                class="system-logo"
-                src="https://cdn.simpleicons.org/googlecalendar"
-                alt="Google Agenda">
+    <img
+        class="system-logo"
+        src="https://cdn.simpleicons.org/googlecalendar"
+        alt="Google Agenda">
 
-            <div>
-                <h3>Agendamentos</h3>
-                <p>Google Agenda do escrit&#243;rio</p>
-            </div>
+    <div>
+        <h3>Agendamentos</h3>
+        <p>Google Agenda do escritório</p>
+    </div>
 
-        </a>
+</a>
 
 
 
@@ -950,50 +951,7 @@ function initTribunals(){
 }
 
 
-// =============================
-// MODAL — AGENDAMENTOS
-// =============================
 
-const agendaModal = document.getElementById('agendaModal');
-const openAgenda = document.getElementById('openAgenda');
-const closeAgenda = document.getElementById('closeAgenda');
-
-function showAgendaModal(){
-    agendaModal.classList.add('active');
-    agendaModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-}
-
-function hideAgendaModal(){
-    agendaModal.classList.remove('active');
-    agendaModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-}
-
-if(openAgenda){
-    openAgenda.addEventListener('click', e => {
-        e.preventDefault();
-        showAgendaModal();
-    });
-}
-
-if(closeAgenda){
-    closeAgenda.addEventListener('click', hideAgendaModal);
-}
-
-if(agendaModal){
-    agendaModal.addEventListener('click', e => {
-        if(e.target === agendaModal){
-            hideAgendaModal();
-        }
-    });
-}
-
-document.addEventListener('keydown', e => {
-    if(e.key === 'Escape' && agendaModal.classList.contains('active')){
-        hideAgendaModal();
-    }
-});
 
 </script>
 
